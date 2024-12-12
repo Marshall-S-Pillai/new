@@ -29,7 +29,18 @@ jobs:
           else
             echo "DEPLOYMENT_ENV=staging" >> $GITHUB_ENV
             echo "TARGET_API_URL=$STAGING_API_URL" >> $GITHUB_ENV
-          fi
 
       - name: Confirm Deployment Configuration
         run: |
+          echo "Deployment Environment: $DEPLOYMENT_ENV"
+          echo "Target API URL: $TARGET_API_URL"
+          echo "Version: $VERSION"
+
+      - name: Deploy Application
+        run: |
+          if [ "$DEPLOYMENT_ENV" = "production" ]; then
+            echo "Deploying to Production Environment"
+            # Add actual deployment commands for production here
+          else
+            echo "Deploying to Staging Environment"
+            # Add actual deployment commands for staging here
