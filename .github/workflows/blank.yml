@@ -13,7 +13,6 @@ jobs:
     env:
       STAGING_API_URL: https://staging-api.example.com
       PRODUCTION_API_URL: https://api.example.com
-      VERSION: v1.1.0
 
     steps:
       - name: Checkout Repository
@@ -22,6 +21,7 @@ jobs:
       - name: Setup Deployment Environment
         id: set-env
         run: |
+          set -e
           echo "Current branch: ${{ github.ref_name }}"
           if [ "${{ github.ref_name }}" = "main" ]; then
             echo "DEPLOYMENT_ENV=production" >> $GITHUB_ENV
@@ -29,18 +29,34 @@ jobs:
           else
             echo "DEPLOYMENT_ENV=staging" >> $GITHUB_ENV
             echo "TARGET_API_URL=$STAGING_API_URL" >> $GITHUB_ENV
+          fi
 
       - name: Confirm Deployment
         run: |
           echo "Deployment Environment: $DEPLOYMENT_ENV"
           echo "Target API URL: $TARGET_API_URL"
-          echo "Version: $VERSION"
+          echo "Version: ${{ github.run_id }}"
+
+      - name: Run Pre-Deployment Tests
+        run: |
+          echo "Running pre-deployment tests for $DEPLOYMENT_ENV environment"
+          # Add actual test commands here, for example:
+          # npm run test
+          echo "Tests completed successfully."
 
       - name: App Deployment
         run: |
           if [ "$DEPLOYMENT_ENV" = "production" ]; then
             echo "Deploying to Production Environment"
-            # Add actual deployment commands for production here
+            # Replace with actual production deployment commands
+            echo "Production deployment completed."
           else
             echo "Deploying to Staging Environment"
-            # Add actual deployment commands for staging here
+            # Replace with actual staging deployment commands
+            echo "Staging deployment completed."
+
+      - name: Post-Deployment Verification
+        run: |
+          echo "Verifying deployment in $DEPLOYMENT_ENV environment"
+          # Add verification commands here, such as hitting an API or checking logs
+          echo "Verification completed."
