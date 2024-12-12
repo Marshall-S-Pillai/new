@@ -42,18 +42,7 @@ jobs:
           echo "Running pre-deployment tests for $DEPLOYMENT_ENV environment"
           # Add actual test commands here, for example:
           # npm run test
-          echo "Tests completed successfully."
-
-      - name: App Deployment
-        run: |
-          if [ "$DEPLOYMENT_ENV" = "production" ]; then
-            echo "Deploying to Production Environment"
-            # Replace with actual production deployment commands
-            echo "Production deployment completed."
-          else
-            echo "Deploying to Staging Environment"
-            # Replace with actual staging deployment commands
-            echo "Staging deployment completed."
+          echo "Tests completed successfully." 
 
       - name: Post-Deployment Verification
         run: |
