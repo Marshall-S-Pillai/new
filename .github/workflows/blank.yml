@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - dev
+      - new
 
 jobs:
   deploy:
@@ -19,7 +19,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Determine Deployment Environment
+      - name: Setup Deployment Environment
         id: set-env
         run: |
           echo "Current branch: ${{ github.ref_name }}"
@@ -30,13 +30,13 @@ jobs:
             echo "DEPLOYMENT_ENV=staging" >> $GITHUB_ENV
             echo "TARGET_API_URL=$STAGING_API_URL" >> $GITHUB_ENV
 
-      - name: Confirm Deployment Configuration
+      - name: Confirm Deployment
         run: |
           echo "Deployment Environment: $DEPLOYMENT_ENV"
           echo "Target API URL: $TARGET_API_URL"
           echo "Version: $VERSION"
 
-      - name: Deploy Application
+      - name: App Deployment
         run: |
           if [ "$DEPLOYMENT_ENV" = "production" ]; then
             echo "Deploying to Production Environment"
